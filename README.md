@@ -4,7 +4,7 @@
 <br/>
 <br/>
 every object live in:<br/>
-[src/main/java/me/catzy/prestiz/objects](https://github.com/Catzy44/prestiz.org/tree/master/src/main/java/me/catzy/prestiz/objects "https://github.com/Catzy44/prestiz.org/tree/master/src/main/java/me/catzy/prestiz/objects")<br/>
+[src/main/java/me/catzy/prestiz/objects](https://github.com/Catzy44/prestiz.org/tree/master/src/main/java/me/catzy/prestiz/objects "https://github.com/Catzy44/prestiz.org/tree/master/src/main/java/me/catzy/prestiz/objects")
 every object contists of **Entity**, **Service** and **Controller**<br/>
 <br/>
 **Entity** definies **SQL Entity** living in MySQL database<br/>
@@ -15,7 +15,7 @@ Every entity is linked to other entities - **relations are REAL**, when u use ob
 <br/>
 Security is straight-away.<br/>
 **Every logged user has access to EVERYTHING**<br/>
-Entitled thru [security/PrzemoFilter.java](https://github.com/Catzy44/prestiz.org/blob/master/src/main/java/me/catzy/prestiz/security/PrzemoFilter.java "security/PrzemoFilter.java")<br/>
+Entitled thru [security/PrzemoFilter.java](https://github.com/Catzy44/prestiz.org/blob/master/src/main/java/me/catzy/prestiz/security/PrzemoFilter.java "security/PrzemoFilter.java")
 <br/>
 project consists of **two gradle conf files**:<br/>
 <br/>
