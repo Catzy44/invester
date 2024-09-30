@@ -24,6 +24,13 @@ for local testing
 
 u can build project using
 gradle assemble
+look for generated jar file in /build/libs/
+replace the file on server
+on server there is man.sh file,
+u can manage ur spring instance throught it.
+
+./man <stop,start,con>
+(con shows u spring terminal)
 
 u can start local server using
 bootnow.bat file
