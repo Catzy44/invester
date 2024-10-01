@@ -1,6 +1,6 @@
 <h1 id="h1--strong-prestiz-org-api-strong-"><a name="<strong>Prestiz.org API</strong>" class="reference-link"></a><span class="header-link octicon octicon-link"></span><strong>Prestiz.org BACKEND</strong></h1>
-<p><em>Look for legacy API in Front-End git project:</em></p>
-<a href="https://github.com/Catzy44/prestiz.org-FRONTEND">link to frontend</a>
+<p><em>Look for legacy API in Front-End git project:</em><br>
+<a href="https://github.com/Catzy44/prestiz.org-FRONTEND">link to frontend</a></p>
 <p>every object live in:<br><a href="https://github.com/Catzy44/prestiz.org/tree/master/src/main/java/me/catzy/prestiz/objects" title="https://github.com/Catzy44/prestiz.org/tree/master/src/main/java/me/catzy/prestiz/objects">src/main/java/me/catzy/prestiz/objects</a><br>every object contists of <strong>Entity</strong>, <strong>Service</strong> and <strong>Controller</strong></p>
 <p><strong>Entity</strong> definies <strong>SQL Entity</strong> living in MySQL database<br><strong>Service</strong> definies all <strong>methods</strong> that can be executed on entity / entity set<br><strong>Controller</strong> routes <strong>API calls</strong> into service</p>
 <p>Every entity is linked to other entities - <strong>relations are REAL</strong>, when u use object from another objects relation Spring’ll get that object for u</p>
