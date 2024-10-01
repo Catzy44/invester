@@ -12,6 +12,14 @@
 <p>./man stop,start,con<br>(con shows u spring terminal)</p>
 <p>u can start <strong>local server</strong> using<br><strong>bootnow.bat</strong> file</p>
 <h2 id="h2--strong-api-technologies-strong-"><a name="<strong>API technologies:</strong>" class="reference-link"></a><span class="header-link octicon octicon-link"></span><strong>API technologies:</strong></h2>
-<p>Java Development Kit 17<br>Spring Boot<br>Hibernate<br>Project Lombok<br>GOOGLE GSON<br>MySQL<br>JPA/JPQL</p>
+<p>Java Development Kit 17<br>
+  Spring Boot<br>
+  Hibernate<br>
+  Project Lombok<br>
+  GOOGLE GSON<br>
+  MySQL<br>
+  JPA/JPQL<br>
+  JRebel
+</p>
 <p>ECLIPSE IDE</p>
 <h6 id="h6--catzy44"><a name="//catzy44" class="reference-link"></a><span class="header-link octicon octicon-link"></span>//catzy44</h6>
