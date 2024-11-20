@@ -4,14 +4,16 @@
 
 package me.catzy.prestiz.objects.sms;
 
-import me.catzy.prestiz.objects.uczestnicy.Uczestnik;
-import org.springframework.data.domain.Pageable;
 import java.util.List;
-import org.springframework.data.jpa.repository.Query;
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.data.jpa.repository.JpaRepository;
+
+import me.catzy.prestiz.objects.uczestnicy.Uczestnik;
 
 @RepositoryRestResource(collectionResourceRel = "sms", path = "sms")
 public interface SMSRepository extends JpaRepository<SMS, Integer>
@@ -34,10 +36,19 @@ public interface SMSRepository extends JpaRepository<SMS, Integer>
     
     SMS getById(final int id);
     
-    @Query("SELECT new me.catzy.prestiz.objects.sms.SMS(m.id,m.status,m.readStatus,m.content,m.number,m.createdTimestamp,m.sentTimestamp,(SELECT CAST(COUNT(s.id) AS int) FROM SMS s WHERE s.number=m.number AND s.type=1 AND s.readStatus=0)) FROM SMS m JOIN (   SELECT s.number AS number, \t  MAX(s.createdTimestamp) AS max_createdTimestamp    FROM SMS s \t  WHERE s.number IS NOT NULL   GROUP BY s.number) AS latest_msg ON m.number = latest_msg.number AND m.createdTimestamp = latest_msg.max_createdTimestamp JOIN (SELECT ROW_NUMBER() OVER (PARTITION BY a.number ORDER BY a.createdTimestamp DESC) AS intRow,a.id AS id FROM SMS a ) AS idk ON m.id=idk.id WHERE idk.intRow=1 ORDER BY m.readStatus ASC, m.createdTimestamp DESC")
+    @Query("SELECT new me.catzy.prestiz.objects.sms.SMS(m.id,m.status,m.readStatus,m.content,m.number,m.createdTimestamp,m.sentTimestamp,"
+    		+ "(SELECT CAST(COUNT(s.id) AS int) FROM SMS s WHERE s.number=m.number AND s.type=1 AND s.readStatus=0))"
+    		+ " FROM SMS m "
+    			+ "JOIN ("
+    			+ "SELECT s.number AS number, MAX(s.createdTimestamp) AS max_createdTimestamp "
+    			+ "FROM SMS s WHERE s.number IS NOT NULL GROUP BY s.number)"
+    		+ " AS latest_msg ON m.number = latest_msg.number AND m.createdTimestamp = latest_msg.max_createdTimestamp "
+    		
+    		+ "JOIN (SELECT ROW_NUMBER() OVER (PARTITION BY a.number ORDER BY a.createdTimestamp DESC) AS intRow,a.id AS id FROM SMS a ) "
+    		+ "AS idk ON m.id=idk.id WHERE idk.intRow=1 ORDER BY m.readStatus ASC, m.createdTimestamp DESC")
     List<SMS> getSMSNews();
     
-    @Query("SELECT new me.catzy.prestiz.objects.sms.SMS(m.id,m.status,m.readStatus,m.content,m.number,m.createdTimestamp,m.sentTimestamp,(SELECT CAST(COUNT(s.id) AS int) FROM SMS s WHERE s.number=m.number AND s.type=1 AND s.readStatus=0)) FROM SMS m JOIN (   SELECT s.number AS number, \t  MAX(s.createdTimestamp) AS max_createdTimestamp    FROM SMS s \t  WHERE s.number IS NOT NULL   GROUP BY s.number) AS latest_msg ON m.number = latest_msg.number AND m.createdTimestamp = latest_msg.max_createdTimestamp JOIN (SELECT ROW_NUMBER() OVER (PARTITION BY a.number ORDER BY a.createdTimestamp DESC) AS intRow,a.id AS id FROM SMS a ) AS idk ON m.id=idk.id WHERE idk.intRow=1 AND m.number LIKE %:number%ORDER BY m.createdTimestamp DESC")
+    @Query("SELECT new me.catzy.prestiz.objects.sms.SMS(m.id,m.status,m.readStatus,m.content,m.number,m.createdTimestamp,m.sentTimestamp,(SELECT CAST(COUNT(s.id) AS int) FROM SMS s WHERE s.number=m.number AND s.type=1 AND s.readStatus=0)) FROM SMS m JOIN (   SELECT s.number AS number,  MAX(s.createdTimestamp) AS max_createdTimestamp FROM SMS s  WHERE s.number IS NOT NULL   GROUP BY s.number) AS latest_msg ON m.number = latest_msg.number AND m.createdTimestamp = latest_msg.max_createdTimestamp JOIN (SELECT ROW_NUMBER() OVER (PARTITION BY a.number ORDER BY a.createdTimestamp DESC) AS intRow,a.id AS id FROM SMS a ) AS idk ON m.id=idk.id WHERE idk.intRow=1 AND m.number LIKE %:number%ORDER BY m.createdTimestamp DESC")
     List<SMS> searchInConversationsByNumber(@Param("number") final String number, final Pageable pageable);
     
     @Modifying

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,5 +33,12 @@ public class InstruktorzyController {
   @PatchMapping({"{id}"})
   private Instruktor updateStatusMultipleByIds(@PathVariable("id") int id, @RequestBody Map<Object, Object> list) throws Exception {
     return service.patch(id,list);
+  }
+  
+  @GetMapping({"self"})
+  public Instruktor getSelf() {
+	  Authentication a = SecurityContextHolder.getContext().getAuthentication();
+	  Instruktor i = (Instruktor) a.getPrincipal();
+	  return i;
   }
 }

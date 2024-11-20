@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.annotation.PostConstruct;
 import lombok.Data;
+import me.catzy.prestiz.PrestizApplication;
 import me.catzy.prestiz.exceptions.UserException;
 import me.catzy.prestiz.objects.miejsca.Miejsce;
 import me.catzy.prestiz.objects.sms_group.SMSGroup;
@@ -179,11 +180,16 @@ public class SMSService {
   public SMSCache getCache() {
     return this.cache;
   }
-  
-  @PostConstruct
-  public void init() {
-    (this.cache = new SMSCache(this.serviceUcz, this.repo)).preloadCache();
-  }
+
+	@PostConstruct
+	public void init() {
+		this.cache = new SMSCache(this.serviceUcz, this.repo);
+		
+		if(!PrestizApplication.SMS_CACHE_PRELOAD_DISABLED) {
+			System.out.println("PRELOADING CACHE...");
+			this.cache.preloadCache();
+		}
+	}
   
   
   public String replaceAttenderSV(String s, Uczestnik u) {
