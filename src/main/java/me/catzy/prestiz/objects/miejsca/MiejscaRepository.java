@@ -1,16 +1,14 @@
-// 
-// Decompiled by Procyon v0.6.0
-// 
-
 package me.catzy.prestiz.objects.miejsca;
 
-import org.springframework.data.domain.Pageable;
-import me.catzy.prestiz.objects.seasons.Season;
-import org.springframework.data.jpa.repository.Query;
 import java.util.List;
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.data.jpa.repository.JpaRepository;
+
+import me.catzy.prestiz.objects.seasons.Season;
 
 @RepositoryRestResource(collectionResourceRel = "miejsca", path = "miejsca")
 public interface MiejscaRepository extends JpaRepository<Miejsce, Integer>

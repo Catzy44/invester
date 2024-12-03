@@ -12,11 +12,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import me.catzy.prestiz.objects.service.conspects.Conspect.ConspectFull;
+import me.catzy.prestiz.objects.service.conspect.category.ConspectCategory;
 import me.catzy.prestiz.objects.service.conspects.fields.ConspectField;
 
 @Getter
@@ -24,22 +28,35 @@ import me.catzy.prestiz.objects.service.conspects.fields.ConspectField;
 @Entity
 @Table(name = "service_conspect")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-@JsonView({ConspectFull.class})
+@JsonView({Conspect.values.class})
 public class Conspect {
-	
-	public interface ConspectFull {}
-	public interface ConspectFields {}
-	
+	public interface values {}
 	
 	@Id
 	@Access(AccessType.PROPERTY)
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	@Column(name = "title")
 	private String title;
 	
-	@JsonView({ConspectFields.class})
+	private boolean deleted;
+	
+	public interface conspectFieldList {}
+	@JsonView({conspectFieldList.class})
 	@OneToMany(mappedBy="conspect")
+	//@JsonIgnore
+	@OrderBy("sort ASC")
 	private List<ConspectField> fields;
+	
+	/*@JsonIdentityReference(alwaysAsId = true)
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")*/
+	public interface conspectCategoryList {}
+	@JsonView({conspectCategoryList.class})
+	@ManyToMany
+	@JoinTable(
+			  name = "service_conspect_in_category", 
+			  joinColumns = @JoinColumn(name = "conspectId"), 
+			  inverseJoinColumns = @JoinColumn(name = "categoryId"))
+	private List<ConspectCategory> categories;
 }

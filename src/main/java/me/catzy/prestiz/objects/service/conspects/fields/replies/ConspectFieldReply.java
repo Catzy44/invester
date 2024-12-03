@@ -20,12 +20,12 @@ import me.catzy.prestiz.objects.service.conspects.fields.ConspectField;
 @Getter
 @Setter
 @Entity
-@Table(name = "service_conspects_field_reply")
+@Table(name = "service_conspect_field_reply")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class ConspectFieldReply {
 	@Id
 	@Access(AccessType.PROPERTY)
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

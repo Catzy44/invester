@@ -10,21 +10,30 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import me.catzy.prestiz.generic.GenericController;
+import me.catzy.prestiz.objects.service.conspect.category.ConspectCategory;
+import me.catzy.prestiz.objects.service.conspects.fields.ConspectField;
 
 @RestController
 @RequestMapping({ "/service_conspect"})
-public class ConspectsController extends GenericController<Conspect, Long> {
-	private interface ConspectRender extends Conspect.ConspectFull, Conspect.ConspectFields{}
+public class ConspectController extends GenericController<Conspect, Long> {
+	
+	
+	
 	
 	@Autowired ConspectsService service;
 	
-	public ConspectsController(ConspectsService service) {
+	public ConspectController(ConspectsService service) {
         super(service);
     }
 	
 	
+	private interface ConspectRender extends Conspect.values, 
+	Conspect.conspectFieldList, 
+	ConspectField.values,
+	Conspect.conspectCategoryList,
+	ConspectCategory.id{}
 	@JsonView(ConspectRender.class)
-	@GetMapping({"render"})
+	@GetMapping({"allWithFields"})
 	public List<Conspect> render() {
 		return service.findAll();
 	}
