@@ -3,6 +3,7 @@ package me.catzy.prestiz.objects.service.conspects;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,10 +17,6 @@ import me.catzy.prestiz.objects.service.conspects.fields.ConspectField;
 @RestController
 @RequestMapping({ "/service_conspect"})
 public class ConspectController extends GenericController<Conspect, Long> {
-	
-	
-	
-	
 	@Autowired ConspectsService service;
 	
 	public ConspectController(ConspectsService service) {
@@ -36,5 +33,12 @@ public class ConspectController extends GenericController<Conspect, Long> {
 	@GetMapping({"allWithFields"})
 	public List<Conspect> render() {
 		return service.findAll();
+	}
+	
+	private interface ConspectNorm extends Conspect.values {}
+	@JsonView({ConspectNorm.class})
+	@GetMapping
+	public ResponseEntity getAll() {
+		return ResponseEntity.ok(service.findAll());
 	}
 }

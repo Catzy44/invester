@@ -12,7 +12,7 @@ public interface ConspectRepository extends JpaRepository<Conspect, Long> {
 	
 	
 	@Query(value="SELECT MAX(f.sort) FROM ConspectField f WHERE f.conspect=:conspect")
-	public int findMaxSortField(@Param("conspect") Conspect conspect);
+	public Integer findMaxSortField(@Param("conspect") Conspect conspect);
 	
 	@Query(value="SELECT c FROM Conspect c WHERE c.deleted=false")
 	public List<Conspect> findAllNotDeleted();

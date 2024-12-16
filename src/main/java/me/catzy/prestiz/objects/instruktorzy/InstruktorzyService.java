@@ -13,11 +13,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import me.catzy.prestiz.exceptions.AuthenticationException;
 import me.catzy.prestiz.exceptions.UserException;
+import me.catzy.prestiz.generic.GenericServiceImpl;
 
 @Service
-public class InstruktorzyService {
-  @Autowired
-  private InstruktorzyRepository repo;
+public class InstruktorzyService extends GenericServiceImpl<Instruktor, Long> {
+	public InstruktorzyService(InstruktorzyRepository repository) {
+		super(repository);
+	}
+	
+  @Autowired private InstruktorzyRepository repo;
   
   @Autowired
   private ObjectMapper objectMapper;

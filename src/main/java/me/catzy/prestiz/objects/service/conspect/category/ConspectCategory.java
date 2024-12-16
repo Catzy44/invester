@@ -17,6 +17,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import me.catzy.prestiz.objects.instruktorzy.Instruktor;
 import me.catzy.prestiz.objects.service.conspects.Conspect;
 
 @Getter
@@ -41,4 +42,8 @@ public class ConspectCategory {
 	@ManyToMany(mappedBy = "categories")
 	@JsonIgnore
 	private List<Conspect> conspects;
+	
+	@ManyToMany(mappedBy = "allowedServiceCategories")
+	@JsonIgnore
+	private List<Instruktor> instructors;
 }

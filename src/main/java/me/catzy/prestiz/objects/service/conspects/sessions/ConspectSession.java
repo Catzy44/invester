@@ -3,6 +3,7 @@ package me.catzy.prestiz.objects.service.conspects.sessions;
 import java.sql.Timestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import jakarta.persistence.Access;
 import jakarta.persistence.AccessType;
@@ -24,16 +25,23 @@ import me.catzy.prestiz.objects.service.conspects.Conspect;
 @Entity
 @Table(name = "service_conspect_session")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+@JsonView({ConspectSession.values.class})
 public class ConspectSession {
+	public interface values {}
+	
 	@Id
 	@Access(AccessType.PROPERTY)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
+	public interface conspect {}
+	@JsonView({ConspectSession.conspect.class})
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "conspectId")
 	private Conspect conspect;
 	
+	public interface instructor {}
+	@JsonView({ConspectSession.instructor.class})
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "instructorId")
 	private Instruktor instructor;

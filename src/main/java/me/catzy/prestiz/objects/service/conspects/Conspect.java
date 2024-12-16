@@ -30,8 +30,10 @@ import me.catzy.prestiz.objects.service.conspects.fields.ConspectField;
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @JsonView({Conspect.values.class})
 public class Conspect {
-	public interface values {}
+	public interface values  extends id{}
 	
+	public static interface id {}
+	@JsonView({id.class})
 	@Id
 	@Access(AccessType.PROPERTY)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

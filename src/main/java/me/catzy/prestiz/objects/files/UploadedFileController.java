@@ -22,7 +22,8 @@ public class UploadedFileController extends GenericController<UploadedFile, Long
         super(service);
     }
 	
-	String uploadDir = "C:/Users/catzy/Desktop/uploads/";
+	String uploadDir = "/var/www/prestiz.org/uploads";
+	//String uploadDir = "C:/Users/catzy/Desktop/uploads/";
 	
 	@PostMapping("/upload")
     public UploadedFile uploadFile(@RequestParam("file") MultipartFile file) throws Exception {

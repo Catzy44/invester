@@ -32,7 +32,10 @@ public class ConspectFieldService extends GenericServiceImpl<ConspectField, Long
 		boolean isNewObject = (entity.getId() == null);
 		if(isNewObject) {
 			Conspect c = entity.getConspect();
-			int maxSort = repoConspect.findMaxSortField(c);
+			Integer maxSort = repoConspect.findMaxSortField(c);
+			if(maxSort == null) {
+				maxSort = 1;
+			}
 			entity.setSort(maxSort+1);
 		}
 		

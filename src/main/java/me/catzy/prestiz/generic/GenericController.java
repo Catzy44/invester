@@ -21,7 +21,7 @@ public abstract class GenericController<T, ID> {
     }
 
     @PostMapping
-    public ResponseEntity<T> create(@RequestBody T entity) {
+    public ResponseEntity<T> create(@RequestBody T entity) throws Exception {
         return ResponseEntity.ok(service.save(entity));
     }
 

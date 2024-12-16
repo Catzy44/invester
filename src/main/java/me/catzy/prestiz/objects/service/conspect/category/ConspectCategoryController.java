@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import me.catzy.prestiz.generic.GenericController;
 
 @RestController
-@RequestMapping({ "/service_conspect_category"})
+@RequestMapping({ "/service/conspect/category"})
 public class ConspectCategoryController extends GenericController<ConspectCategory, Long> {
 	@Autowired ConspectCategoryService service;
 	
