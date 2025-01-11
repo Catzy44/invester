@@ -1,7 +1,5 @@
 package me.catzy.prestiz.objects.service.conspects.sessions;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +13,7 @@ import me.catzy.prestiz.objects.instruktorzy.Instruktor;
 import me.catzy.prestiz.objects.service.conspects.Conspect;
 
 @RestController
-@RequestMapping({ "/service_conspect_session"})
+@RequestMapping({ "/service/conspect/session"})
 public class ConspectSessionController extends GenericController<ConspectSession, Long> {
 	public ConspectSessionController(ConspectSessionService service) {
         super(service);
@@ -29,7 +27,7 @@ public class ConspectSessionController extends GenericController<ConspectSession
 	ConspectSession.instructor, Instruktor.id {};
 	@JsonView({getAll.class})
 	@GetMapping
-	public ResponseEntity<List<ConspectSession>> getAll() {
+	public ResponseEntity getAll() {
 		return ResponseEntity.ok(service.findAll());
 	}
 }

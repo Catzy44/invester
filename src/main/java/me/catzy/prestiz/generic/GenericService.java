@@ -12,5 +12,5 @@ public interface GenericService<T, ID> {
     List<T> findAll();
     void deleteById(ID id);
     Optional<T> patch(ID id, Map<Object, Object> list) throws JsonMappingException;
-    Optional<List<Object>> patchMultiple(List<Object> list) throws JsonMappingException;
+    Optional<List<T>> patchMultiple(List<Object> list) throws JsonMappingException;
 }

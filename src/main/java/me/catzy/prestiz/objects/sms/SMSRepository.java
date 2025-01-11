@@ -38,6 +38,7 @@ public interface SMSRepository extends JpaRepository<SMS, Integer>
     
     @Query("SELECT new me.catzy.prestiz.objects.sms.SMS(m.id,m.status,m.readStatus,m.content,m.number,m.createdTimestamp,m.sentTimestamp,"
     		+ "(SELECT CAST(COUNT(s.id) AS int) FROM SMS s WHERE s.number=m.number AND s.type=1 AND s.readStatus=0))"
+    		
     		+ " FROM SMS m "
     			+ "JOIN ("
     			+ "SELECT s.number AS number, MAX(s.createdTimestamp) AS max_createdTimestamp "
@@ -45,7 +46,7 @@ public interface SMSRepository extends JpaRepository<SMS, Integer>
     		+ " AS latest_msg ON m.number = latest_msg.number AND m.createdTimestamp = latest_msg.max_createdTimestamp "
     		
     		+ "JOIN (SELECT ROW_NUMBER() OVER (PARTITION BY a.number ORDER BY a.createdTimestamp DESC) AS intRow,a.id AS id FROM SMS a ) "
-    		+ "AS idk ON m.id=idk.id WHERE idk.intRow=1 ORDER BY m.readStatus ASC, m.createdTimestamp DESC")
+    		+ "AS idk ON m.id=idk.id WHERE idk.intRow=1 ORDER BY m.readStatus ASC, m.createdTimestamp DESC LIMIT 100")
     List<SMS> getSMSNews();
     
     @Query("SELECT new me.catzy.prestiz.objects.sms.SMS(m.id,m.status,m.readStatus,m.content,m.number,m.createdTimestamp,m.sentTimestamp,(SELECT CAST(COUNT(s.id) AS int) FROM SMS s WHERE s.number=m.number AND s.type=1 AND s.readStatus=0)) FROM SMS m JOIN (   SELECT s.number AS number,  MAX(s.createdTimestamp) AS max_createdTimestamp FROM SMS s  WHERE s.number IS NOT NULL   GROUP BY s.number) AS latest_msg ON m.number = latest_msg.number AND m.createdTimestamp = latest_msg.max_createdTimestamp JOIN (SELECT ROW_NUMBER() OVER (PARTITION BY a.number ORDER BY a.createdTimestamp DESC) AS intRow,a.id AS id FROM SMS a ) AS idk ON m.id=idk.id WHERE idk.intRow=1 AND m.number LIKE %:number%ORDER BY m.createdTimestamp DESC")

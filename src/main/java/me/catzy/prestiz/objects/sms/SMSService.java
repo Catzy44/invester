@@ -19,6 +19,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.annotation.PostConstruct;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import me.catzy.prestiz.PrestizApplication;
 import me.catzy.prestiz.exceptions.UserException;
 import me.catzy.prestiz.objects.miejsca.Miejsce;
@@ -65,8 +67,13 @@ public class SMSService {
         break;
       } 
     } 
-    if (id == -1)
+    if (id == -1) {
+    	for(Object s : map.keySet()) {
+    		String ss = (String)s;
+    		System.out.println(ss+": "+map.get(s));
+    	}
       throw new UserException("id key not found within object", "meow!"); 
+    }
     SMS obj = this.repo.getById(id);
     SMS oldCpy = obj.clone();
     this.objectMapper.updateValue(obj, map);
@@ -240,7 +247,8 @@ public class SMSService {
       return this.changeItterator;
     }
     
-    @Data
+    @Getter
+    @Setter
     @JsonView({SMSService.vSMSCEntry.class})
     static class SMSCEntry {
       private int changeItterator = 0;

@@ -50,9 +50,9 @@ public class GenericServiceImpl<T, ID> implements GenericService<T, ID> {
     
     @SuppressWarnings("unchecked")
     @Override
-    public Optional<List<Object>> patchMultiple(List<Object> list) throws JsonMappingException {
+    public Optional<List<T>> patchMultiple(List<Object> list) throws JsonMappingException {
     	
-    	List<Object> modified = new ArrayList<Object>();
+    	List<T> modified = new ArrayList<T>();
     	for(Object mapObj : list) {
 			Map<Object, Object> map = (Map<Object, Object>) mapObj;
 			ID id = (ID) map.get("id");
@@ -61,7 +61,7 @@ public class GenericServiceImpl<T, ID> implements GenericService<T, ID> {
 	    	T obj = objOpt.get();
 	    	this.objectMapper.updateValue(obj, map);
 	    	
-	    	modified.add(Optional.of(save(obj)));
+	    	modified.add(save(obj));
     	}
     	
     	return Optional.of(modified);

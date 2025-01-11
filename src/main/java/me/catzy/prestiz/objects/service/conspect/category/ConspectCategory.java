@@ -28,7 +28,7 @@ import me.catzy.prestiz.objects.service.conspects.Conspect;
 @JsonView({ConspectCategory.values.class})
 public class ConspectCategory {
 	public interface id {}
-	public interface values {}
+	public interface values extends id{}
 	
 	@JsonView({ConspectCategory.id.class})
 	@Id

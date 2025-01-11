@@ -1,6 +1,9 @@
 package me.catzy.prestiz.objects.service.conspects.fields.replies;
 
+import java.sql.Timestamp;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import jakarta.persistence.Access;
 import jakarta.persistence.AccessType;
@@ -22,7 +25,12 @@ import me.catzy.prestiz.objects.service.conspects.fields.ConspectField;
 @Entity
 @Table(name = "service_conspect_field_reply")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+@JsonView({ConspectFieldReply.values.class})
 public class ConspectFieldReply {
+	public static interface id {}
+	public static interface values extends id ,ConspectField.id,Instruktor.id{}
+	
+	@JsonView({id.class})
 	@Id
 	@Access(AccessType.PROPERTY)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,4 +45,6 @@ public class ConspectFieldReply {
 	private Instruktor instructor;
 	
 	private String reply;
+	
+	private Timestamp timestamp;
 }

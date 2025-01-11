@@ -17,7 +17,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication(exclude = { UserDetailsServiceAutoConfiguration.class })
 public class PrestizApplication {
-	public static final boolean SMS_CACHE_PRELOAD_DISABLED = true;
+	public static final boolean SMS_CACHE_PRELOAD_DISABLED = false;
 
 	public static void main(String[] args) {
 		try {

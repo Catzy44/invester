@@ -1,7 +1,5 @@
 package me.catzy.prestiz;
 
-import java.security.MessageDigest;
-import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,18 +59,5 @@ public class ToolBox {
 			return ""; // No extension found
 		}
 		return fileName.substring(lastDotIndex + 1);
-	}
-	public static String hashSHA256(String input) throws Exception {
-        MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        byte[] encodedHash = digest.digest(input.getBytes("UTF-8"));
-        return Base64.getEncoder().encodeToString(encodedHash);
-    }
-
-	public static String generateAuthmeString(String password) throws Exception {
-		RandomString rs = new RandomString(16);
-		
-		String salt = rs.nextString();
-		String doubleHashedPassword = hashSHA256(hashSHA256(password) + salt);
-		return "$SHA$" + salt + "$" + doubleHashedPassword;
 	}
 }

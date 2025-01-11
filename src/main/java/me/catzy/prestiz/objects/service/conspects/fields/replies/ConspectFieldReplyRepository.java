@@ -12,6 +12,7 @@ import me.catzy.prestiz.objects.service.conspects.fields.ConspectField;
 
 @RepositoryRestResource(collectionResourceRel = "service_conspect_field_reply", path = "service_conspect_field_reply")
 public interface ConspectFieldReplyRepository extends JpaRepository<ConspectFieldReply, Long> {
+	
 	@Query(value="SELECT r FROM ConspectFieldReply r WHERE r.conspectField=:field AND r.instructor=:instructor")
 	List<ConspectFieldReply> getInstructorReplies(@Param("field") ConspectField field,@Param("instructor") Instruktor instructor);
 }

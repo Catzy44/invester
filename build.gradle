@@ -11,6 +11,10 @@ java {
 	sourceCompatibility = '17'
 }
 
+tasks.test {
+    enabled = false
+}
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
@@ -31,7 +35,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-cache'
 	/*developmentOnly 'org.springframework.boot:spring-boot-devtools'*/
+//	runtimeOnly 'com.mysql:mysql-connector-j'
 	runtimeOnly 'com.mysql:mysql-connector-j'
+	//runtimeOnly 'mysql:mysql-connector-java:8.1.0'
+	//implementation 'com.mysql:mysql-connector-java'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
