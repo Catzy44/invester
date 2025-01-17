@@ -49,7 +49,7 @@ public class GrupyService {
   }
   
   public Grupa byIdLazy(int id) {
-    return (Grupa)this.repo.getOne(Integer.valueOf(id));
+    return (Grupa)this.repo.getReferenceById(Integer.valueOf(id));
   }
   
   public int countClassesInMonth(Grupa g, int monthNum) {

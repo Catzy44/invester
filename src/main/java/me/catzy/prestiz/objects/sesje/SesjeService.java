@@ -1,15 +1,17 @@
 package me.catzy.prestiz.objects.sesje;
 
-import jakarta.transaction.Transactional;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.Random;
-import me.catzy.prestiz.objects.instruktorzy.Instruktor;
-import me.catzy.prestiz.security.RandomString;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
+import jakarta.transaction.Transactional;
+import me.catzy.prestiz.objects.instruktorzy.Instruktor;
+import me.catzy.prestiz.security.RandomString;
 
 @Transactional
 @Service
@@ -33,7 +35,7 @@ public class SesjeService {
     if (isSessionExpired(s)) {
       System.out.println("[SesjeService] Session for user " + s.getInstruktor().getNick() + " expired!");
       killSession(s);
-      return null;
+      throw new Exception("session expired"); 
     } 
     return s;
   }

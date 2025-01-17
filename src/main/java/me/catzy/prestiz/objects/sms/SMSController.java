@@ -49,6 +49,7 @@ public class SMSController {
   public List<SMS> uploadMultipleSMSes(@RequestBody List<SMS> smsesToSend) {
     for (SMS sms : smsesToSend)
       sms = this.service.save(sms); 
+    
     return smsesToSend;
   }
   
@@ -71,7 +72,7 @@ public class SMSController {
   
   @PostMapping
   public SMS receivedSMSasdf(@RequestBody SMS sms) {
-    return this.service.postSMS(sms);
+    return this.service.save(sms);
   }
   
   @GetMapping({"/unreadSMSCount"})
@@ -96,7 +97,7 @@ public class SMSController {
   
   @JsonView({vgetSMSNewsWithUsers.class})
   @GetMapping({"/news/{idx}"})
-  public List<SMSService.SMSCache.SMSCEntry> getSMSNewsPartWithUsers(@PathVariable("idx") int idx) {
+  public List<SMSCache.SMSCEntry> getSMSNewsPartWithUsers(@PathVariable("idx") int idx) {
     return this.service.getCache().getCachedSMSNewsPart(idx, 1);
   }
   
@@ -107,7 +108,7 @@ public class SMSController {
   }
   @JsonView({vgetSMSNewsWithUsers.class})
   @PostMapping({"/news"})
-  public List<SMSService.SMSCache.SMSCEntry> getSMSNewsPartWithUsers(@RequestBody NewsQuestionData data) {
+  public List<SMSCache.SMSCEntry> getSMSNewsPartWithUsers(@RequestBody NewsQuestionData data) {
     return this.service.getCache().getCachedSMSNewsPart(data.getIndex(), data.getCount());
   }
   
@@ -134,7 +135,7 @@ public class SMSController {
   @JsonView({SMS.vSMSFull.class})
   @PostMapping({"/by_number/chid"})
   public int getLatestSMS(@RequestBody PhoneNumberData phone) {
-    SMSService.SMSCache.SMSCEntry e = this.service.getCache().getByNumber(phone.getNumber());
+    SMSCache.SMSCEntry e = this.service.getCache().getByNumber(phone.getNumber());
     if (e == null)
       return 0; 
     return e.getChangeItterator();

@@ -51,7 +51,7 @@ public class ConspectController extends GenericController<Conspect, Long> {
 		return ResponseEntity.ok(service.findById(id).get());
 	}
 	
-	private interface ConspectNorm extends Conspect.values {}
+	private interface ConspectNorm extends Conspect.values,Conspect.conspectCategoryList,ConspectCategory.id {}
 	@JsonView({ConspectNorm.class})
 	@GetMapping
 	public ResponseEntity getAll() {
