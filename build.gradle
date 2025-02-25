@@ -1,18 +1,8 @@
-plugins {
+	plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.1.1'
 	id 'io.spring.dependency-management' version '1.1.0'
 	id 'org.hidetake.ssh' version '2.11.2' // SSH Plugin
-}
-
-remotes {
-  webServer {
-    host = 'prestiz.org'
-    port = 12822
-    user = 'ubuntu'
-    //identity = file('id_rsa')
-  	password = 'hjekeuwh13'
-  }
 }
 
 group = 'me.catzy'
@@ -34,6 +24,7 @@ configurations {
 
 repositories {
 	mavenCentral()
+	jcenter()
 }
 
 dependencies {
@@ -55,6 +46,18 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 	implementation 'com.google.code.gson:gson:2.10.1'
+	
+	implementation 'com.rometools:rome:1.18.0'
+	implementation 'com.unfbx:chatgpt-java:1.1.5'
+	
+	// Selenium Java bindings
+    implementation 'org.seleniumhq.selenium:selenium-java:4.11.0'
+
+    // (Optional) WebDriverManager for managing browser drivers automatically
+    implementation 'io.github.bonigarcia:webdrivermanager:5.5.1'
+
+    // (Optional) JUnit for testing
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
 }
 
 tasks.named('test') {
@@ -66,67 +69,3 @@ processResources.duplicatesStrategy='include'
 if (project.hasProperty('rebelAgent')) {
     bootRun.jvmArgs += rebelAgent
 }
-
-task buildAndUpload {
-	group = 'Custom Tasks'  // Custom group for easy identification
-    description = 'Uploads JAR and manages service on a remote server.'
-    
-    dependsOn 'build', 'deploy'
-}
-
-task deploy {
-	group = 'Custom Tasks'
-	doLast {
-		def jarFile = file("$buildDir/libs/${project.name}-${version}.jar")
-		ssh.run {
-			session(remotes.webServer) {
-				execute 'bash /opt/prestiz.org/man.sh stop'
-				put from: jarFile, into: '/opt/prestiz.org/'
-				execute 'bash /opt/prestiz.org/man.sh start'
-			}
-		}
-	}
-}
-
-/*task uploadAndManageService {
-    group = 'Custom Tasks'  // Custom group for easy identification
-    description = 'Uploads JAR and manages service on a remote server.'
-    
-    doLast {
-        // Define SSH session configuration (no need for 'host', 'username' directly here)
-        def sshConfig = ssh.newSession {
-            // Define session-specific configuration for this task
-            host = 'prestiz.org'
-            username = 'ftk'
-            password = 'hjekeuwh13'  // Or use SSH keys if preferred
-        }
-
-        // 1. Execute the `man.sh` script with the `stop` argument
-        sshConfig.execute {
-            command = 'bash /opt/prestiz.org/man.sh stop'
-            println "Stopping service on remote server..."
-        }
-
-        // 2. Assemble the JAR file (if not already built)
-        def jarFile = file("$buildDir/libs/${project.name}-${version}.jar")
-        tasks.jar.execute()
-
-        // 3. Upload the JAR file to the remote server
-        def remoteDir = '/opt/prestiz.org/'
-        println "Uploading JAR to the server..."
-        
-        // Using SSH plugin to upload the JAR file
-        sshConfig.put {
-            from jarFile
-            into remoteDir
-        }
-
-        // 4. Execute the `man.sh` script with the `start` argument
-        println "Starting service on remote server..."
-        sshConfig.execute {
-            command = 'bash /opt/prestiz.org/man.sh start'
-        }
-
-        println "Task completed: JAR uploaded and service restarted."
-    }
-}*/
