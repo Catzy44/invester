@@ -12,10 +12,12 @@ import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.data.rest.core.config.ProjectionDefinitionConfiguration;
 import org.springframework.data.rest.core.projection.ProjectionDefinitions;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication(exclude = { UserDetailsServiceAutoConfiguration.class })
+@EnableScheduling
 public class InvesterApplication {
 	public static final boolean SMS_CACHE_PRELOAD_DISABLED = false;
 

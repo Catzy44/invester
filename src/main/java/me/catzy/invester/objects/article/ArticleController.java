@@ -1,4 +1,4 @@
-package me.catzy.invester.objects.service.article;
+package me.catzy.invester.objects.article;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,8 +29,8 @@ public class ArticleController extends GenericController<Article, Long> {
 		service.loadArticles();
 	}
 	
-	@GetMapping("/process")
+	/*@GetMapping("/process")
 	public void procArticles() throws Exception {
 		service.processArticles();
-	}
+	}*/
 }

@@ -1,4 +1,6 @@
-package me.catzy.invester.objects.service.article;
+package me.catzy.invester.objects.article;
+
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
@@ -14,4 +16,5 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 	public List<Article> findAllNotDeleted();*/
 	
 	public Article findByUrl(String url);
+	public List<Article> findByEventsIsEmpty();
 }
