@@ -73,10 +73,10 @@ Use this command to start:
 ## 🧠 AI Processing Output Example  
 
 DeepSeek LLM processes each article and returns JSON like this:  
-```[
+`[
 	{type: 1, impact: 7, timestampStart: "2025-02-25T16:06:00.000Z", timestampEnd: "2025-02-26T00:00:00.000Z", scream: "Weaker US Treasuries"},
 	{type: 0, impact: 8, timestampStart: "2025-02-25T16:06:00.000Z", timestampEnd: "2025-03-02T00:00:00.000Z", scream: "Tariff Threats Sour Mood"} 
-]```
+]`
 
 ## 📌 Future Plans
 - Support for **more news sources**  
