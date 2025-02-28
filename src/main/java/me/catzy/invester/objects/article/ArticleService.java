@@ -100,11 +100,15 @@ public class ArticleService extends GenericServiceImpl<Article, Long> {
         	}
         	logger.info("new article: "+ a.title);
         	
-        	scrapeArticleContent(a);
+        	a.content = scrapeArticleContent(a);
+        	
+        	a = repo.save(a);
+        	
+        	Thread.sleep(1000);
         }
 	}
 	
-	private void scrapeArticleContent(Article a) {
+	private String scrapeArticleContent(Article a) {
 		try {
 			WebDriver driver = serviceWeb.get();
 
@@ -124,15 +128,13 @@ public class ArticleService extends GenericServiceImpl<Article, Long> {
 				logger.warn("article web-element not found AGAIN - trying alternative method (FX), URL:" + a.getUrl());
 				el = driver.findElements(By.className("fxs_article_content"));
 			}
-			a.content = Utils.extractArticleText(el.get(0));
-
-			Thread.sleep(1000);
-        	
-        	a = repo.save(a);
+			
+			return Utils.extractArticleText(el.get(0));
     	} catch (Exception e) {
     		logger.error("failed scraping article: " + a.url);
     		e.printStackTrace();
     	}
+		return null;
 	}
 	
 	private NodeList loadDoc(URL url) throws ParserConfigurationException, IOException, SAXException {
