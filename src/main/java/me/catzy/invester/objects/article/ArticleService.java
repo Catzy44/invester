@@ -46,7 +46,8 @@ public class ArticleService extends GenericServiceImpl<Article, Long> {
 	@Autowired ArticleRepository repo;
 	@Autowired MarketEventService serviceAI;
 	@Autowired WebDriverService serviceWeb;
-	//private static final Logger logger = LogManager.getLogger(InvesterApplication.class);
+	
+	private static final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	
 	private static final Logger logger = LoggerFactory.getLogger(ArticleService.class);
 	
@@ -61,10 +62,10 @@ public class ArticleService extends GenericServiceImpl<Article, Long> {
 		rssFeeds.add("https://pl.investing.com/rss/stock_Indices.rss");
 		rssFeeds.add("https://pl.investing.com/rss/commodities_Metals.rss");
 		rssFeeds.add("https://pl.investing.com/rss/market_overview_Fundamental.rss"); //analiza fundamentalna
-		
+
 		for(String s : rssFeeds) {
 			try {
-				loadArticle(new URL(s));
+				processRSS(new URL(s));
 			} catch (Exception e) {
 				logger.error("failed processing one of privided RSS's");
 				e.printStackTrace();
@@ -73,7 +74,7 @@ public class ArticleService extends GenericServiceImpl<Article, Long> {
 		serviceWeb.close();
 	}
 	
-	public void loadArticle(URL url) throws Exception {
+	public void processRSS(URL url) throws Exception {
 		NodeList items = loadDoc(url);
         
         List<Article> articles = new ArrayList<Article>();
@@ -99,41 +100,48 @@ public class ArticleService extends GenericServiceImpl<Article, Long> {
         	}
         	logger.info("new article: "+ a.title);
         	
-        	try {
-            	//if(a.content == null) {
-            		WebDriver driver = serviceWeb.get();
-            		
-    				driver.get(a.url);
-    				
-    				List<WebElement> el = driver.findElements(By.id("article"));
-    				if(el.size() == 0) {
-    					logger.warn("article web-element not found - trying alternative method, URL:"+a.getUrl());
-    					el = driver.findElements(By.className("articlePage"));
-    				}
-    				if(el.size() == 0) {
-    					logger.warn("article web-element not found AGAIN - trying alternative method (FX), URL:"+a.getUrl());
-    					el = driver.findElements(By.className("fxs_article_content"));
-    				}
-    				a.content = Utils.extractArticleText(el.get(0));
-    				
-    				Thread.sleep(1000);
-    			//}
-            	
-            	a = repo.save(a);
-        	} catch (Exception e) {
-        		logger.error("failed scraping article: " + a.url);
-        		e.printStackTrace();
-        	}
+        	scrapeArticleContent(a);
         }
 	}
 	
+	private void scrapeArticleContent(Article a) {
+		try {
+			WebDriver driver = serviceWeb.get();
+
+			driver.get(a.url);
+
+			// 1
+			List<WebElement> el = driver.findElements(By.id("article"));
+
+			// 2
+			if (el.size() == 0) {
+				logger.warn("article web-element not found - trying alternative method, URL:" + a.getUrl());
+				el = driver.findElements(By.className("articlePage"));
+			}
+
+			// 3
+			if (el.size() == 0) {
+				logger.warn("article web-element not found AGAIN - trying alternative method (FX), URL:" + a.getUrl());
+				el = driver.findElements(By.className("fxs_article_content"));
+			}
+			a.content = Utils.extractArticleText(el.get(0));
+
+			Thread.sleep(1000);
+        	
+        	a = repo.save(a);
+    	} catch (Exception e) {
+    		logger.error("failed scraping article: " + a.url);
+    		e.printStackTrace();
+    	}
+	}
+	
 	private NodeList loadDoc(URL url) throws ParserConfigurationException, IOException, SAXException {
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
+		DocumentBuilder builder = factory.newDocumentBuilder();
+		
         InputStream inputStream = url.openStream();
         Document document = builder.parse(inputStream);
 
-        // Normalizacja dokumentu
+        //normalising DOC
         document.getDocumentElement().normalize();
         NodeList items = document.getElementsByTagName("item");
         
@@ -151,7 +159,7 @@ public class ArticleService extends GenericServiceImpl<Article, Long> {
 	
 	
 	
-	
+	//multiple data formats support
 	private DateFormat[] formatters = new DateFormat[]{
 		new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss X", Locale.ENGLISH),
 		new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH),
