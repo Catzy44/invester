@@ -1,4 +1,4 @@
-package me.catzy.invester.objects.market_event;
+package me.catzy.invester.objects.marketEvent;
 
 import java.sql.Timestamp;
 
@@ -13,7 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import me.catzy.invester.objects.market_event.MarketEventProcessingService.Estimation;
+import me.catzy.invester.objects.marketEvent.MarketEventProcessingService.Estimation;
 
 @RestController
 @RequestMapping({ "/market_events"})

@@ -1,4 +1,4 @@
-package me.catzy.invester.objects.market_event;
+package me.catzy.invester.objects.marketEvent;
 
 import java.io.IOException;
 import java.net.URI;

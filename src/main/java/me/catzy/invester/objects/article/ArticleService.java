@@ -33,7 +33,7 @@ import org.xml.sax.SAXException;
 
 import me.catzy.invester.Utils;
 import me.catzy.invester.generic.GenericServiceImpl;
-import me.catzy.invester.objects.market_event.MarketEventProcessingService;
+import me.catzy.invester.objects.marketEvent.MarketEventProcessingService;
 import me.catzy.invester.objects.webdriver.WebDriverService;
 
 @Service

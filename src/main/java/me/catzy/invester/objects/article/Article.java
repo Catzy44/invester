@@ -17,7 +17,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import me.catzy.invester.objects.market_event.MarketEvent;
+import me.catzy.invester.objects.marketEvent.MarketEvent;
 
 @Getter
 @Setter
