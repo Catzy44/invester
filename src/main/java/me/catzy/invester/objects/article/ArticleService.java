@@ -33,7 +33,7 @@ import org.xml.sax.SAXException;
 
 import me.catzy.invester.Utils;
 import me.catzy.invester.generic.GenericServiceImpl;
-import me.catzy.invester.objects.market_event.MarketEventService;
+import me.catzy.invester.objects.market_event.MarketEventProcessingService;
 import me.catzy.invester.tasks.ai.WebDriverService;
 
 @Service
@@ -44,7 +44,7 @@ public class ArticleService extends GenericServiceImpl<Article, Long> {
 	}
 	
 	@Autowired ArticleRepository repo;
-	@Autowired MarketEventService serviceAI;
+	@Autowired MarketEventProcessingService serviceAI;
 	@Autowired WebDriverService serviceWeb;
 	//private static final Logger logger = LogManager.getLogger(InvesterApplication.class);
 	

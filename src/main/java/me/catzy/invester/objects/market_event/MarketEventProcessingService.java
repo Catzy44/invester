@@ -22,15 +22,29 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import me.catzy.invester.objects.article.Article;
 import me.catzy.invester.objects.article.ArticleRepository;
 
 @Service
-public class MarketEventService {
+public class MarketEventProcessingService {
 	
 	@Autowired MarketEventRepository repo;
 	@Autowired ArticleRepository repoArticles;
-	private static final Logger logger = LoggerFactory.getLogger(MarketEventService.class);
+	private static final Logger logger = LoggerFactory.getLogger(MarketEventProcessingService.class);
+	
+	@AllArgsConstructor
+	@Getter
+	@Setter
+	public static class Estimation {
+		Long positive;
+		Long negative;
+	}
+	
+	public Estimation getEstimationForaDay(Timestamp day) {
+		return repo.getDailyEstimation(day);
+		
+	}
 	
 	@Scheduled(fixedRate = 3, initialDelay = 0, timeUnit = TimeUnit.MINUTES)
 	public void findAndProcessArticle() {
