@@ -1,4 +1,4 @@
-package me.catzy.invester.tasks.ai;
+package me.catzy.invester.objects.webdriver;
 
 import java.util.Collections;
 
