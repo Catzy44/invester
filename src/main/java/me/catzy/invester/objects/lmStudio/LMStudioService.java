@@ -10,8 +10,6 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,14 +18,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.catzy.invester.objects.marketEvent.MarketEvent;
 
-@Service
 public class LMStudioService {
 	private static ObjectMapper objectMapper = new ObjectMapper();
 	private static HttpClient client = HttpClient.newHttpClient();
 	
 	public AIResponse askAI(AICompletion c) throws URISyntaxException, IOException, InterruptedException {
 		// convert AIMessage DTO into JSON String
-		String requestBody = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(c);
+		String requestBody = objectMapper
+				.writerWithDefaultPrettyPrinter()
+				.writeValueAsString(c);
 
 		//web request to LMStudio (chooosen AI model has to be started first through GUI)
 		HttpRequest request = HttpRequest.newBuilder()
@@ -43,8 +42,9 @@ public class LMStudioService {
 
 		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-		// convert LMStudioAPI JSON String response into Response DTO
-		Response res = objectMapper.readValue(response.body(), Response.class);
+		// convert LMStudioAPI JSON String response into LMStudioAPIResponse DTO
+		LMStudioAPIResponse res = objectMapper
+				.readValue(response.body(), LMStudioAPIResponse.class);
 
 		// try to parse AI response !THROWS!
 		return res.tryToParseResponse();
@@ -61,6 +61,8 @@ public class LMStudioService {
 		public String role = null;
 		public String content = null;
 	}
+	
+	/*IM LEAVING SETTINGS THERE - ITS A STATIC CLASS SO ITS NOT WRONG*/
 	@Getter
 	public static class AICompletion {
 		public String model = "deepseek-r1-distill-qwen-14b";
@@ -70,7 +72,8 @@ public class LMStudioService {
 		public  List<AIMessage> messages = new ArrayList<AIMessage>();
 	}
 	
-	public static class Response {
+	/*LM STUDIO API FOR THE SAKE OF JACKSON*/
+	public static class LMStudioAPIResponse {
 		public String id;
 		public String object;
 		public long created;

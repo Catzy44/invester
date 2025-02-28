@@ -7,12 +7,21 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-import me.catzy.invester.objects.marketEvent.MarketEventProcessingService.EstimationDTO;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 @RepositoryRestResource(collectionResourceRel = "market_events", path = "market_events")
 public interface MarketEventRepository extends JpaRepository<MarketEvent, Long> {
 	
-	@Query("SELECT NEW me.catzy.invester.objects.marketEvent.MarketEventProcessingService$EstimationDTO( " +
+	@AllArgsConstructor
+	@Getter
+	@Setter
+	public static class EstimationDTO {
+		Long positive;
+		Long negative;
+	}
+	@Query("SELECT NEW me.catzy.invester.objects.marketEvent.MarketEventRepository$EstimationDTO( " +
 		       "SUM(CASE WHEN me.type = 1 THEN me.impact ELSE 0 END), " +
 		       "SUM(CASE WHEN me.type = 0 THEN me.impact ELSE 0 END)) " +
 		       "FROM MarketEvent me " +

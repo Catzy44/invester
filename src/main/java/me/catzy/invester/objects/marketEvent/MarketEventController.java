@@ -13,13 +13,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import me.catzy.invester.objects.marketEvent.MarketEventProcessingService.EstimationDTO;
+import me.catzy.invester.objects.marketEvent.MarketEventRepository.EstimationDTO;
 
 @RestController
 @RequestMapping({ "/marketEvents"})
 public class MarketEventController {
 	@Autowired MarketEventRepository repo;
-	@Autowired MarketEventProcessingService service;
+	@Autowired MarketEventService service;
 	
 	//manual
 	@GetMapping("/process")
@@ -36,6 +36,6 @@ public class MarketEventController {
 	}
 	@PostMapping("/estimate")
 	public EstimationDTO estimate(@RequestBody EstimateRequestBody body) throws Exception {
-		return service.getEstimationForaDay(body.timestamp);
+		return repo.getDailyEstimation(body.timestamp);
 	}
 }

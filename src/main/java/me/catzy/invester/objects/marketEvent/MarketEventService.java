@@ -12,9 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 import me.catzy.invester.objects.article.Article;
 import me.catzy.invester.objects.article.ArticleRepository;
 import me.catzy.invester.objects.lmStudio.LMStudioService;
@@ -23,25 +20,14 @@ import me.catzy.invester.objects.lmStudio.LMStudioService.AIMessage;
 import me.catzy.invester.objects.lmStudio.LMStudioService.AIResponse;
 
 @Service
-public class MarketEventProcessingService {
+public class MarketEventService {
 	
 	@Autowired MarketEventRepository repo;
 	@Autowired ArticleRepository repoArticles;
 	@Autowired LMStudioService serviceLM;
 	
-	private static final Logger logger = LoggerFactory.getLogger(MarketEventProcessingService.class);
+	private static final Logger logger = LoggerFactory.getLogger(MarketEventService.class);
 	private static final int RETRIES = 3;
-	
-	@AllArgsConstructor
-	@Getter
-	@Setter
-	public static class EstimationDTO {
-		Long positive;
-		Long negative;
-	}
-	public EstimationDTO getEstimationForaDay(Timestamp day) {
-		return repo.getDailyEstimation(day);
-	}
 	
 	@Scheduled(fixedRate = 3, initialDelay = 0, timeUnit = TimeUnit.MINUTES)
 	public void findAndProcessArticle() {
@@ -92,7 +78,7 @@ public class MarketEventProcessingService {
 		}
 	}
 	
-	
+	//TODO: move prompt to a separate file
 	public AIResponse askChatbot(String question, Timestamp timestamp) throws URISyntaxException, IOException, InterruptedException {
 		AICompletion c = new AICompletion();
 		
