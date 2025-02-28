@@ -2,6 +2,10 @@
 
 A **Spring Boot** application that collects and analyzes financial news to estimate **EUR/USD** market trends.
 
+## 🐱 Data presentation
+
+MQL4 script for data presentation is called kotek.mq4 and exists in main dir
+
 ## 📌 Features
 
 - **Automated RSS Scanning**  

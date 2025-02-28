@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +33,7 @@ public class MarketEventController {
 	private static class EstimateRequestBody {
 		Timestamp timestamp;
 	}
-	@GetMapping("/estimate")
+	@PostMapping("/estimate")
 	public Estimation estimate(@RequestBody EstimateRequestBody body) throws Exception {
 		return service.getEstimationForaDay(body.timestamp);
 	}
