@@ -26,7 +26,7 @@ public class ArticleController extends GenericController<Article, Long> {
 	
 	@GetMapping("/start")
 	public void loadArticles() throws Exception {
-		service.loadArticles();
+		service.checkForAnyNews();
 	}
 	
 	/*@GetMapping("/process")

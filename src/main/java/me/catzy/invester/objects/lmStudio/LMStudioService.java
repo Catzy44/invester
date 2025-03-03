@@ -10,6 +10,8 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,6 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.catzy.invester.objects.marketEvent.MarketEvent;
 
+@Service
 public class LMStudioService {
 	private static ObjectMapper objectMapper = new ObjectMapper();
 	private static HttpClient client = HttpClient.newHttpClient();

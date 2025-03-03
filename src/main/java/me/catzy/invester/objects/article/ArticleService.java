@@ -51,12 +51,13 @@ public class ArticleService extends GenericServiceImpl<Article, Long> {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ArticleService.class);
 	
-	@Scheduled(fixedRate = 3, initialDelay = 1, timeUnit = TimeUnit.MINUTES)
-	public void loadArticles() throws MalformedURLException, Exception {
+	@Scheduled(fixedRate = 10, initialDelay = 1, timeUnit = TimeUnit.MINUTES)
+	public void checkForAnyNews() throws MalformedURLException, Exception {
 		logger.info("checking for news...");
 		
 		List<String> rssFeeds = new ArrayList<String>();
 		rssFeeds.add("https://www.fxstreet.com/rss/news");
+		rssFeeds.add("https://www.fxstreet.com/rss/stocks");
 		rssFeeds.add("https://pl.investing.com/rss/news_14.rss"); //gospodarcze
 		rssFeeds.add("https://pl.investing.com/rss/news_95.rss"); //o wskanikach ekonomicznych
 		rssFeeds.add("https://pl.investing.com/rss/stock_Indices.rss");
