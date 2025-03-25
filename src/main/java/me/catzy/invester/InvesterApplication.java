@@ -37,7 +37,7 @@ public class InvesterApplication {
 
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
+		return new WebMvcConfigurer() {//
 			public void addCorsMappings(CorsRegistry registry) {
 				InvesterApplication.setCorsRegistry(registry);
 			}
