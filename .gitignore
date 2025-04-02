@@ -1,5 +1,6 @@
 src/main/resources/application.properties
 src/main/resources/application.remote.properties
+proc.pid
 
 HELP.md
 .gradle

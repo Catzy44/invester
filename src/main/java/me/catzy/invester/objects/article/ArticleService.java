@@ -3,6 +3,7 @@ package me.catzy.invester.objects.article;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -66,7 +67,7 @@ public class ArticleService extends GenericServiceImpl<Article, Long> {
 
 		for(String s : rssFeeds) {
 			try {
-				processRSS(new URL(s));
+				processRSS(new URI(s).toURL());
 			} catch (Exception e) {
 				logger.error("failed processing one of privided RSS's");
 				e.printStackTrace();

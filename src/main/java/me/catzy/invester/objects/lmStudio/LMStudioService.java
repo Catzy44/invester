@@ -29,6 +29,8 @@ public class LMStudioService {
 	private static HttpClient client = HttpClient.newHttpClient();
 	private static final Logger logger = LoggerFactory.getLogger(LMStudioService.class);
 	
+	//private static final int LMStudioPort = 1278;
+	
 	boolean LMStudioWaked = false;
 	private void wakeLMStudioIfNeeded() throws IOException, InterruptedException {
 		if(LMStudioWaked) {
