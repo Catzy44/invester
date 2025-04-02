@@ -23,7 +23,8 @@ public class MarketEvent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int type; // 0 - negatywny wpływ, 1 - pozytywny
-    private int impact; // Waga wpływu (0-10)
+    private int impactPrc; // Waga wpływu (0-10)
+    private int impactChance; // Waga wpływu (0-10)
     @Column(name="start_timestamp")
     private Timestamp startTimestamp; // Timestamp początku wpływu
     @Column(name="end_timestamp")

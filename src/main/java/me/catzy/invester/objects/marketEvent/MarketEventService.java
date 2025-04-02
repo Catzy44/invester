@@ -48,7 +48,7 @@ public class MarketEventService {
 				//inner TRY/CATCH so we can clean-up created mess
 				try {
 					for (MarketEvent me : mes.events) {
-						logger.info("typ:" + (me.getType() == 0 ? "DOWN" : "UP") + ", value:" + me.getImpact());
+						logger.info("typ:" + (me.getType() == 0 ? "DOWN" : "UP") + ", prc:" + me.getImpactPrc() + ", chance: " + me.getImpactChance());
 
 						me.setArticle(a);
 						me = repo.save(me);
@@ -93,7 +93,8 @@ The response should be a array of objects.
 Each object is representing influence on the EURUSD market and have to have following fields:
 
 type: 0 (negative impact) or 1 (positive impact)
-impact: an integer from 0 to 10 indicating the weight of the influence
+impactPrc: an integer from 0 to 100 representing the percentage fluctuation of the asset's value.
+impactChange integer from 0 to 100 representing the chance this fluctuation will occur.
 startTimestamp: A SQL TIMESTAMP representing the start of the influence in the format yyyy-MM-dd'T'HH:mm:ss.SSS±hh:mm. Specify the use of UTC offset instead of time zone abbreviations If the time zone is unknown, use Z to indicate UTC.
 endTimestamp: A SQL TIMESTAMP representing the end of the influence, formatted similarly.
 scream: a short phrase (up to 32 characters) capturing a /*brief outcry or expression*/your expression.
@@ -105,14 +106,16 @@ EXAMPLE OF OUTPUT FORMATTING:
 [
 	{
       "type": 1,
-      "impact": 7,
+      "impactPrc": 17,
+      "impactChance": 7,
       "startTimestamp": "2025-02-25T16:06:00.000Z",
       "endTimestamp": "2025-02-26T00:00:00.000Z",
       "scream": "Weaker US Treasuries"
     },
     {
       "type": 0,
-      "impact": 8,
+      "impactPrc": 7,
+      "impactChance": 17,
       "startTimestamp": "2025-02-25T16:06:00.000Z",
       "endTimestamp": "2025-03-02T00:00:00.000Z",
       "scream": "Tariff Threats Sour Mood"
