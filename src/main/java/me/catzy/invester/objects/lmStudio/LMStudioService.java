@@ -36,11 +36,10 @@ public class LMStudioService {
 	        	.version(HttpClient.Version.HTTP_1_1)
 	            .uri(new URI("http://127.0.0.1:1234/api/v0/chat/completions"))
 	            .POST(HttpRequest.BodyPublishers.ofString(requestBody))
-	            .timeout(Duration.ofSeconds(60))
 	            .header("Content-Type", "application/json; charset=utf-8")
 	            .header("User-Agent", "JavaHttpClient/1.0")
 	            .header("Accept", "*/*")
-	            .timeout(Duration.ofSeconds(60*10))
+	            .timeout(Duration.ofMinutes(20))
 	            .build();
 
 		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
