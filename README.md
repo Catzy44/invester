@@ -2,11 +2,11 @@
 
 A **Spring Boot** application that collects and analyzes financial news to estimate **EUR/USD** market trends.
 
-## 🐱 Data presentation
+## Data presentation
 
 MQL4 script for data presentation is called kotek.mq4 and exists in main dir
 
-## 📌 Features
+## Features
 
 - **Automated RSS Scanning**  
   Every 3 minutes, the application fetches articles from financial news sources.
@@ -20,7 +20,7 @@ MQL4 script for data presentation is called kotek.mq4 and exists in main dir
 - **Data Storage & Visualization**  
   Stores results in **MySQL** via Hibernate and generates market impact charts.
 
-## 🔧 Tech Stack
+## Tech Stack
 
 - **Backend**: Spring Boot, Hibernate (JPA), Selenium  
 - **Database**: MySQL
@@ -28,7 +28,7 @@ MQL4 script for data presentation is called kotek.mq4 and exists in main dir
 - **Scraping**: Selenium with *modified* ChromeDriver  
 - **Scheduling**: Spring `@Scheduled` Tasks  
 
-## 🚀 How It Works
+## How It Works
 
 1. **Fetch & Store Articles**  
    - Every 3 minutes, scans RSS feeds.
@@ -45,7 +45,7 @@ MQL4 script for data presentation is called kotek.mq4 and exists in main dir
 4. **Visualize Data**  
    - Generates **charts** to track market impact trends.
 
-## 📂 Example RSS Feeds
+## Example RSS Feeds
 
 The application scans news from:  
 - [FXStreet News](https://www.fxstreet.com/rss/news)  
@@ -55,13 +55,13 @@ The application scans news from:
 - [Investing.com (Metals)](https://pl.investing.com/rss/commodities_Metals.rss)  
 - [Investing.com (Fundamental Analysis)](https://pl.investing.com/rss/market_overview_Fundamental.rss)  
 
-## 📌 Future Plans
+## Future Plans
 - Implement Security
 - Support for **more news sources**  
 - Improved AI **trend prediction**  
 - **Web dashboard** for data visualization  
 
-## 📜 License
+## License
 MIT License. See **LICENSE** file for details.
 
 ---
