@@ -55,34 +55,8 @@ The application scans news from:
 - [Investing.com (Metals)](https://pl.investing.com/rss/commodities_Metals.rss)  
 - [Investing.com (Fundamental Analysis)](https://pl.investing.com/rss/market_overview_Fundamental.rss)  
 
-## 🛠️ Installation & Setup
-
-### 1️⃣ Clone the Repository  
-Run this command:  
-`git clone https://github.com/your-username/your-repo.git`  
-Then navigate to the project folder:  
-`cd your-repo`  
-
-### 2️⃣ Configure Database  
-Update **application.properties** with your MySQL credentials:  
-
-spring.datasource.url=jdbc:mysql://localhost:3306/your_db  
-spring.datasource.username=your_user  
-spring.datasource.password=your_password  
-
-### 3️⃣ Run the Application  
-Use this command to start:  
-`./gradlew bootRun`  
-
-## 🧠 AI Processing Output Example  
-
-DeepSeek LLM processes each article and returns JSON like this:  
-`[
-	{type: 1, impact: 7, timestampStart: "2025-02-25T16:06:00.000Z", timestampEnd: "2025-02-26T00:00:00.000Z", scream: "Weaker US Treasuries"},
-	{type: 0, impact: 8, timestampStart: "2025-02-25T16:06:00.000Z", timestampEnd: "2025-03-02T00:00:00.000Z", scream: "Tariff Threats Sour Mood"} 
-]`
-
 ## 📌 Future Plans
+- Implement Security
 - Support for **more news sources**  
 - Improved AI **trend prediction**  
 - **Web dashboard** for data visualization  
