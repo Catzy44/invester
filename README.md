@@ -63,7 +63,3 @@ The application scans news from:
 
 ## License
 MIT License. See **LICENSE** file for details.
-
----
-
-✨ *Contributions & feedback are welcome!* 🚀

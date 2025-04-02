@@ -10,6 +10,8 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -18,14 +20,50 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import me.catzy.invester.Utils;
 import me.catzy.invester.objects.marketEvent.MarketEvent;
 
 @Service
 public class LMStudioService {
 	private static ObjectMapper objectMapper = new ObjectMapper();
 	private static HttpClient client = HttpClient.newHttpClient();
+	private static final Logger logger = LoggerFactory.getLogger(LMStudioService.class);
+	
+	boolean LMStudioWaked = false;
+	private void wakeLMStudioIfNeeded() throws IOException, InterruptedException {
+		if(LMStudioWaked) {
+			return;
+		}
+		logger.info("starting LSM...");
+		Process p = new ProcessBuilder("lms","server","start").start();
+		Utils.dumpUntilExahausted(p.getInputStream());
+		Utils.dumpUntilExahausted(p.getErrorStream());
+		p.waitFor();
+		Thread.sleep(1000);
+		
+		logger.info("unloading old LLM model...");
+		p = new ProcessBuilder("lms","unload","kot").start();
+		Utils.dumpUntilExahausted(p.getInputStream());
+		Utils.dumpUntilExahausted(p.getErrorStream());
+		p.waitFor();
+		Thread.sleep(1000);
+		
+		logger.info("loading LLM model...");
+		p = new ProcessBuilder("lms","load","14B","--identifier","kot").start();
+		Utils.dumpUntilExahausted(p.getInputStream());
+		Utils.dumpUntilExahausted(p.getErrorStream());
+		p.waitFor();
+		Thread.sleep(1000);
+		
+		logger.info("LSM up and running!");
+		
+		LMStudioWaked = true;
+		
+	}
 	
 	public AIResponse askAI(AICompletion c) throws URISyntaxException, IOException, InterruptedException {
+		wakeLMStudioIfNeeded();
+		
 		// convert AIMessage DTO into JSON String
 		String requestBody = objectMapper
 				.writerWithDefaultPrettyPrinter()
@@ -84,7 +122,7 @@ public class LMStudioService {
 		public Usage usage;
 		public Stats stats;
 		public ModelInfo model_info;
-		public Runtime runtime;
+		public LLMRuntime runtime;
 		
 		public AIResponse tryToParseResponse() throws JsonMappingException, JsonProcessingException {
 			String rnt = getReplyNoThinking();
@@ -125,7 +163,7 @@ public class LMStudioService {
 		public String format;
 		public int context_length;
 	}
-	public static class Runtime {
+	public static class LLMRuntime {
 		public String name;
 		public String version;
 		public List<String> supported_formats = new ArrayList<String>();
