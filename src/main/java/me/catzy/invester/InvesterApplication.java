@@ -6,9 +6,6 @@ import java.io.FileWriter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
@@ -22,7 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication(exclude = { UserDetailsServiceAutoConfiguration.class })
 @EnableScheduling
-@EnableCaching
+//@EnableCaching
 public class InvesterApplication {
 	public static final boolean SMS_CACHE_PRELOAD_DISABLED = false;
 
@@ -67,10 +64,10 @@ public class InvesterApplication {
 		};
 	}
 	
-	@Bean
+	/*@Bean
 	public CacheManager cacheManager() {
 		return (CacheManager) new ConcurrentMapCacheManager(new String[] { "test" });
-	}
+	}*/
 
 	@Bean
 	public ProjectionFactory projectionFactory() {
