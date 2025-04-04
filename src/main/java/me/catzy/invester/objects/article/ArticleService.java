@@ -104,6 +104,11 @@ public class ArticleService extends GenericServiceImpl<Article, Long> {
         	
         	a.content = scrapeArticleContent(a);
         	
+        	if(a.content == null || a.content.length() == 0) {
+        		logger.error("Failed to scrape article: " + f.getUrl());
+        		continue;
+        	}
+        	
         	a = repo.save(a);
         	
         	Thread.sleep(1000);

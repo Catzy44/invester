@@ -17,7 +17,7 @@ public class ArticleController extends GenericController<Article, Long> {
         super(service);
     }
 	
-	/*private interface ConspectNorm extends Article.values,Article.conspectCategoryList,ConspectCategory.id {}
+	/*private interface ConspectNorm extends ArticleRel.values,ArticleRel.conspectCategoryList,ConspectCategory.id {}
 	@JsonView({ConspectNorm.class})
 	@GetMapping
 	public ResponseEntity getAll() {

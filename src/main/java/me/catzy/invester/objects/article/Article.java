@@ -45,10 +45,6 @@ public class Article {
 	@Column(name="processed_timestamp")
 	public Timestamp processedTimestamp;
 	
-	/*public Integer impactGood;
-	public Integer impactBad;
-	public String scream;*/
-	
 	@OneToMany(mappedBy="article")
 	public List<MarketEvent> events;
 }

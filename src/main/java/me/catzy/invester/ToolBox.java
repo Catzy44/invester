@@ -18,6 +18,7 @@ public class ToolBox {
 	@Autowired
 	private RepositoryRestConfiguration restConf;
 
+	@SuppressWarnings("rawtypes")
 	public List<?> projectList(List<?> list, String projection) {
 		if (projection == null)
 			return list;

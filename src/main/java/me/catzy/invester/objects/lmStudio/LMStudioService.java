@@ -29,7 +29,29 @@ public class LMStudioService {
 	private static HttpClient client = HttpClient.newHttpClient();
 	private static final Logger logger = LoggerFactory.getLogger(LMStudioService.class);
 	
-	//private static final int LMStudioPort = 1278;
+	/*@PreDestroy
+    public void onShutdown() {
+		try {
+			logger.info("unloading old LLM model...");
+			Process p = new ProcessBuilder("lms","unload","kot").start();
+			//Utils.dumpUntilExahausted(p.getInputStream());
+			//Utils.dumpUntilExahausted(p.getErrorStream());
+			p.waitFor();
+			Thread.sleep(1000);
+		} catch (Exception e) {}
+    }
+	
+	@PostConstruct
+	public void init() {
+		try {
+			logger.info("INIT");
+			Process p = new ProcessBuilder("lms","server","start").start();
+			p.waitFor();
+			p = new ProcessBuilder("lms","load","14B","--identifier","kot").start();
+			p.waitFor();
+			Thread.sleep(1000);
+		} catch (Exception e) {}
+	}*/
 	
 	boolean LMStudioWaked = false;
 	private void wakeLMStudioIfNeeded() throws IOException, InterruptedException {
@@ -43,10 +65,11 @@ public class LMStudioService {
 		p.waitFor();
 		Thread.sleep(1000);
 		
+		//to be sure
 		logger.info("unloading old LLM model...");
 		p = new ProcessBuilder("lms","unload","kot").start();
-		Utils.dumpUntilExahausted(p.getInputStream());
-		Utils.dumpUntilExahausted(p.getErrorStream());
+		//Utils.dumpUntilExahausted(p.getInputStream());
+		//Utils.dumpUntilExahausted(p.getErrorStream());
 		p.waitFor();
 		Thread.sleep(1000);
 		
@@ -83,7 +106,7 @@ public class LMStudioService {
 	            .build();
 
 		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
+		
 		// convert LMStudioAPI JSON String response into LMStudioAPIResponse DTO
 		LMStudioAPIResponse res = objectMapper
 				.readValue(response.body(), LMStudioAPIResponse.class);

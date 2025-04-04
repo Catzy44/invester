@@ -10,11 +10,11 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 	
 	
 	/*@Query(value="SELECT MAX(f.sort) FROM ConspectField f WHERE f.conspect=:conspectField")
-	public Integer findMaxSortField(@Param("conspectField") Article conspect);
+	public Integer findMaxSortField(@Param("conspectField") ArticleRel conspect);
 	
-	@Query(value="SELECT c FROM Article c WHERE c.deleted=false")
-	public List<Article> findAllNotDeleted();*/
+	@Query(value="SELECT c FROM ArticleRel c WHERE c.deleted=false")
+	public List<ArticleRel> findAllNotDeleted();*/
 	
 	public Article findByUrl(String url);
-	public List<Article> findByEventsIsEmpty();
+	public List<Article> findByEventsIsEmptyAndContentIsNotNull();
 }

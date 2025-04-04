@@ -31,11 +31,12 @@ public class MarketEventService {
 	
 	@Scheduled(fixedRate = 3, initialDelay = 0, timeUnit = TimeUnit.MINUTES)
 	public void findAndProcessArticle() {
-		List<Article> unprocessed = repoArticles.findByEventsIsEmpty();
+		List<Article> unprocessed = repoArticles.findByEventsIsEmptyAndContentIsNotNull();
 		
 		for(Article a : unprocessed) {
 			processArticle(a);
 		}
+		System.out.println("A");
 	}
 	
 	public void processArticle(Article a) {
