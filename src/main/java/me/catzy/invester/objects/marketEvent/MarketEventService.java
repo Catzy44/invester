@@ -36,7 +36,6 @@ public class MarketEventService {
 		for(Article a : unprocessed) {
 			processArticle(a);
 		}
-		System.out.println("A");
 	}
 	
 	public void processArticle(Article a) {

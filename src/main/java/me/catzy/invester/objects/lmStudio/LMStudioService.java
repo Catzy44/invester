@@ -29,30 +29,6 @@ public class LMStudioService {
 	private static HttpClient client = HttpClient.newHttpClient();
 	private static final Logger logger = LoggerFactory.getLogger(LMStudioService.class);
 	
-	/*@PreDestroy
-    public void onShutdown() {
-		try {
-			logger.info("unloading old LLM model...");
-			Process p = new ProcessBuilder("lms","unload","kot").start();
-			//Utils.dumpUntilExahausted(p.getInputStream());
-			//Utils.dumpUntilExahausted(p.getErrorStream());
-			p.waitFor();
-			Thread.sleep(1000);
-		} catch (Exception e) {}
-    }
-	
-	@PostConstruct
-	public void init() {
-		try {
-			logger.info("INIT");
-			Process p = new ProcessBuilder("lms","server","start").start();
-			p.waitFor();
-			p = new ProcessBuilder("lms","load","14B","--identifier","kot").start();
-			p.waitFor();
-			Thread.sleep(1000);
-		} catch (Exception e) {}
-	}*/
-	
 	boolean LMStudioWaked = false;
 	private void wakeLMStudioIfNeeded() throws IOException, InterruptedException {
 		if(LMStudioWaked) {
