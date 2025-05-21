@@ -41,4 +41,9 @@ public class MarketEvent {
     @ManyToOne
     @JoinColumn(name = "article_id")
     private Article article;
+    
+    @Override
+    public String toString() {
+    	return "type:"+(type == 0 ? "UP" : "DOWN")+",impactPrc:"+impactPrc+"impactChancePrc:"+impactChance+",startTtimestamp:"+startTimestamp.toString()+",endTimestamp:"+endTimestamp.toString()+",scream:"+scream+"\n";
+    }
 }

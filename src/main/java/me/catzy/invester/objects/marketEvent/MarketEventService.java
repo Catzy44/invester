@@ -4,12 +4,10 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import me.catzy.invester.objects.article.Article;
@@ -29,7 +27,7 @@ public class MarketEventService {
 	private static final Logger logger = LoggerFactory.getLogger(MarketEventService.class);
 	private static final int RETRIES = 3;
 	
-	@Scheduled(fixedRate = 3, initialDelay = 0, timeUnit = TimeUnit.MINUTES)
+	//@Scheduled(fixedRate = 3, initialDelay = 0, timeUnit = TimeUnit.MINUTES)
 	public void findAndProcessArticle() {
 		List<Article> unprocessed = repoArticles.findByEventsIsEmptyAndContentIsNotNull();
 		
@@ -141,6 +139,4 @@ ARTICLE CONTENT:
 		
 		return serviceLM.askAI(c);
 	}
-	
-	
 }
