@@ -1,4 +1,4 @@
-# Market News Analyzer PROROTYPE WIP
+# Market News Analyzer PROTOTYPE WIP
 
 A **Spring Boot** application that collects and analyzes financial news to estimate **EUR/USD** market trends.
 
