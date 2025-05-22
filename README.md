@@ -24,24 +24,5 @@ A **Spring Boot** application that collects and analyzes financial news to estim
 - **Scraping**: Selenium with *modified* ChromeDriver  
 - **Scheduling**: Spring `@Scheduled` Tasks  
 
-## How It Works
-
-1. **Fetch & Store Articles**  
-   - Every 3 minutes, scans RSS feeds.
-   - Stores **new articles** in the MySQL database.
-
-2. **Scrape Full Article Content**  
-   - Uses **Selenium** to extract article text.
-
-3. **Analyze Market Impact with AI**  
-   - Sends articles to **DeepSeek LLM** for analysis.  
-   - AI predicts **positive/negative market impact**.  
-   - Results are stored in MySQL.
-
-4. **Visualize Data**  
-   - Generates **charts** to track market impact trends.
-- Improved AI **trend prediction**  
-- **Web dashboard** for data visualization  
-
 ## License
 MIT License. See **LICENSE** file for details.
