@@ -1,10 +1,6 @@
-# Market News Analyzer
+# Market News Analyzer PROROTYPE WIP
 
 A **Spring Boot** application that collects and analyzes financial news to estimate **EUR/USD** market trends.
-
-## Data presentation
-
-MQL4 script for data presentation is called kotek.mq4 and exists in main dir
 
 ## Features
 
@@ -44,20 +40,6 @@ MQL4 script for data presentation is called kotek.mq4 and exists in main dir
 
 4. **Visualize Data**  
    - Generates **charts** to track market impact trends.
-
-## Example RSS Feeds
-
-The application scans news from:  
-- [FXStreet News](https://www.fxstreet.com/rss/news)  
-- [Investing.com (Economy)](https://pl.investing.com/rss/news_14.rss)  
-- [Investing.com (Indicators)](https://pl.investing.com/rss/news_95.rss)  
-- [Investing.com (Stock Indices)](https://pl.investing.com/rss/stock_Indices.rss)  
-- [Investing.com (Metals)](https://pl.investing.com/rss/commodities_Metals.rss)  
-- [Investing.com (Fundamental Analysis)](https://pl.investing.com/rss/market_overview_Fundamental.rss)  
-
-## Future Plans
-- Implement Security
-- Support for **more news sources**  
 - Improved AI **trend prediction**  
 - **Web dashboard** for data visualization  
 
