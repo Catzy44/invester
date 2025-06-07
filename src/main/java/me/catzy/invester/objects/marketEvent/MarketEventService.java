@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import me.catzy.invester.generic.GenericServiceImpl;
 import me.catzy.invester.objects.article.Article;
 import me.catzy.invester.objects.article.ArticleRepository;
 import me.catzy.invester.objects.lmStudio.LMStudioService;
@@ -18,9 +19,14 @@ import me.catzy.invester.objects.lmStudio.LMStudioService.AIMessage;
 import me.catzy.invester.objects.lmStudio.LMStudioService.AIResponse;
 
 @Service
-public class MarketEventService {
+public class MarketEventService extends GenericServiceImpl<MarketEvent, Long>{
 	
-	@Autowired MarketEventRepository repo;
+	public MarketEventService(MarketEventRepository repository) {
+		super(repository);
+		this.repo = repository;
+	}
+
+	private MarketEventRepository repo;
 	@Autowired ArticleRepository repoArticles;
 	@Autowired LMStudioService serviceLM;
 	

@@ -20,10 +20,9 @@ import me.catzy.invester.objects.article.Article;
 @Table(name = "market_events")
 @Getter
 @Setter
-@JsonView({me.catzy.invester.objects.marketEvent.MarketEvent.Fields.class})
+@JsonView({me.catzy.invester.objects.marketEvent.MarketEvent.values.class})
 public class MarketEvent {
-	public interface Fields {}
-	public interface ArticleRel {}
+	public interface values {}
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +36,8 @@ public class MarketEvent {
     private Timestamp endTimestamp; // Timestamp końca wpływu
     private String scream; // Krótkie wyrazy: "Yield Drop", "Semiconductor Ban" itp.
     
-    @JsonView({ArticleRel.class})
+    public interface vArticle {}
+    @JsonView({vArticle.class})
     @ManyToOne
     @JoinColumn(name = "article_id")
     private Article article;

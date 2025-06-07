@@ -45,6 +45,8 @@ public class Article {
 	@Column(name="processed_timestamp")
 	public Timestamp processedTimestamp;
 	
+	public interface vMarketEvents {}
+	@JsonView(vMarketEvents.class)
 	@OneToMany(mappedBy="article")
 	public List<MarketEvent> events;
 }
