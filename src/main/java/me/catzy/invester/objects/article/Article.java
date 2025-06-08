@@ -14,6 +14,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,6 +40,7 @@ public class Article {
 	public String title;
 	public String content;
 	
+	@OrderBy("sort ASC")
 	@Column(name="published_timestamp")
 	public Timestamp timestamp;
 	

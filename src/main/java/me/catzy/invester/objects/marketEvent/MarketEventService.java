@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import me.catzy.invester.generic.GenericServiceImpl;
@@ -33,9 +35,9 @@ public class MarketEventService extends GenericServiceImpl<MarketEvent, Long>{
 	private static final Logger logger = LoggerFactory.getLogger(MarketEventService.class);
 	private static final int RETRIES = 3;
 	
-	//@Scheduled(fixedRate = 3, initialDelay = 0, timeUnit = TimeUnit.MINUTES)
+	@Scheduled(fixedRate = 3, initialDelay = 0, timeUnit = TimeUnit.MINUTES)
 	public void findAndProcessArticle() {
-		List<Article> unprocessed = repoArticles.findByEventsIsEmptyAndContentIsNotNull();
+		List<Article> unprocessed = repoArticles.findByEventsIsEmptyAndContentIsNotNullOrderByTimestamp();
 		
 		for(Article a : unprocessed) {
 			processArticle(a);
@@ -101,7 +103,7 @@ impactPrc: an integer from 0 to 100 representing the percentage fluctuation of t
 impactChange integer from 0 to 100 representing the chance this fluctuation will occur.
 startTimestamp: A SQL TIMESTAMP representing the start of the influence in the format yyyy-MM-dd'T'HH:mm:ss.SSS±hh:mm. Specify the use of UTC offset instead of time zone abbreviations If the time zone is unknown, use Z to indicate UTC.
 endTimestamp: A SQL TIMESTAMP representing the end of the influence, formatted similarly.
-scream: a short phrase (up to 32 characters) capturing a /*brief outcry or expression*/your expression.
+scream: a short phrase (up to 32 characters) capturing a /*brief outcry or expression*/your expression IN POLISH LANGUAGE!.
 
 Object can be both positive and negative. The generated objects will be further processed for charting purposes.
 Object keys cannot be null.
@@ -129,6 +131,8 @@ EXAMPLE OF OUTPUT FORMATTING:
 Please make sure that you are formatting TIMESTAMP's yyyy-MM-dd'T'HH:mm:ss.SSSX It is important for you to replace X in provided format with correctl time zone DO NOT LEAVE X THERE!
 When timezone is unknown replace X with Z (IT MEANS UTC)
 This refined prompt ensures clarity, conciseness, and effectiveness in guiding the AI to process the news article accurately and generate the required JSON objects for analysis.
+
+IMPORTANT That we want ONLY incluences on EURUSD market. Not other markets.
 				
 ARTICLE PUBLICATION DATE: {pubdate}
 ARTICLE CONTENT:

@@ -7,9 +7,9 @@
 <application generated-by="eclipse" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.zeroturnaround.com" xsi:schemaLocation="http://www.zeroturnaround.com http://update.zeroturnaround.com/jrebel/rebel-2_1.xsd">
 
 	<classpath>
-		<dir name="C:/Users/catzy/Desktop/prestiz.org-BACKEND/bin/main">
+		<dir name="bin/main">
 		</dir>
-		<dir name="C:/Users/catzy/Desktop/prestiz.org-BACKEND/bin/default">
+		<dir name="bin/default">
 		</dir>
 	</classpath>
 

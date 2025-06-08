@@ -1,6 +1,7 @@
 package me.catzy.invester.objects.marketEvent;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -27,5 +28,8 @@ public interface MarketEventRepository extends JpaRepository<MarketEvent, Long> 
 		       "FROM MarketEvent me " +
 		       "WHERE DATE(me.startTimestamp) = DATE(:day) ")
 	public EstimationDTO getDailyEstimation(@Param("day") Timestamp day);
+	
+	@Query("SELECT m FROM MarketEvent m WHERE m.endTimestamp > CURRENT_TIMESTAMP")
+	public List<MarketEvent> getCurrentEvents();
 	
 }

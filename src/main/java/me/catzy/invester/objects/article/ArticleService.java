@@ -53,7 +53,7 @@ public class ArticleService extends GenericServiceImpl<Article, Long> {
 	private static final Logger logger = LoggerFactory.getLogger(ArticleService.class);
 	
 	//initial delat zmienić na 1 z powrotem
-	@Scheduled(fixedRate = 10, initialDelay = 0, timeUnit = TimeUnit.MINUTES)
+	@Scheduled(fixedRate = 10, initialDelay = 1, timeUnit = TimeUnit.MINUTES)
 	public void checkForAnyNews() throws MalformedURLException, Exception {
 		logger.info("checking for news...");
 		
@@ -106,7 +106,7 @@ public class ArticleService extends GenericServiceImpl<Article, Long> {
         	a.content = scrapeArticleContent(a);
         	
         	if(a.content == null || a.content.length() == 0) {
-        		logger.error("Failed to scrape article: " + f.getUrl());
+        		logger.error("Failed to scrape article: " + a.getUrl());
         		continue;
         	}
         	

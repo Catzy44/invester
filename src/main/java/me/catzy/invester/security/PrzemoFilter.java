@@ -53,7 +53,7 @@ public class PrzemoFilter extends OncePerRequestFilter {
     
       List<GrantedAuthority> ewqr = new ArrayList<>();
       ewqr.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-      UsernamePasswordAuthenticationToken tokeasdfn = new UsernamePasswordAuthenticationToken("CHUJ", null, ewqr);
+      UsernamePasswordAuthenticationToken tokeasdfn = new UsernamePasswordAuthenticationToken("WODOSPAD", null, ewqr);
 //      UsernamePasswordAuthenticationToken tokeasdfn = new UsernamePasswordAuthenticationToken(session.getInstruktor(), null, ewqr);
       return tokeasdfn;
   }
