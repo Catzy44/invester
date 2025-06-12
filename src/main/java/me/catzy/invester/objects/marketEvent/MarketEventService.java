@@ -100,10 +100,10 @@ Each object is representing influence on the EURUSD market and have to have foll
 
 type: 0 (negative impact) or 1 (positive impact)
 impactPrc: an integer from 0 to 100 representing the percentage fluctuation of the asset's value.
-impactChange integer from 0 to 100 representing the chance this fluctuation will occur.
+impactChance integer from 0 to 100 representing the chance this fluctuation will occur.
 startTimestamp: A SQL TIMESTAMP representing the start of the influence in the format yyyy-MM-dd'T'HH:mm:ss.SSS±hh:mm. Specify the use of UTC offset instead of time zone abbreviations If the time zone is unknown, use Z to indicate UTC.
 endTimestamp: A SQL TIMESTAMP representing the end of the influence, formatted similarly.
-scream: a short phrase (up to 32 characters) capturing a /*brief outcry or expression*/your expression IN POLISH LANGUAGE!.
+scream: a short expressive phrase (max 32 characters) in POLISH capturing a spontaneous reaction or mood.
 
 Object can be both positive and negative. The generated objects will be further processed for charting purposes.
 Object keys cannot be null.
