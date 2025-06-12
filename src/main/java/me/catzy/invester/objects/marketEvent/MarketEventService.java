@@ -35,7 +35,7 @@ public class MarketEventService extends GenericServiceImpl<MarketEvent, Long>{
 	private static final Logger logger = LoggerFactory.getLogger(MarketEventService.class);
 	private static final int RETRIES = 3;
 	
-	@Scheduled(fixedRate = 3, initialDelay = 0, timeUnit = TimeUnit.MINUTES)
+	@Scheduled(fixedRate = 1, initialDelay = 0, timeUnit = TimeUnit.MINUTES)
 	public void findAndProcessArticle() {
 		List<Article> unprocessed = repoArticles.findByEventsIsEmptyAndContentIsNotNullOrderByTimestamp();
 		

@@ -27,7 +27,7 @@ public class MarketEventController extends GenericController<MarketEvent, Long>{
 		this.service = service;
 	}
 	@Autowired MarketEventRepository repo;
-	 MarketEventService service;
+	private MarketEventService service;
 	
 	//manual
 	@GetMapping("/process")
