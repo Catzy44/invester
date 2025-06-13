@@ -96,7 +96,7 @@ You are an AI expert in business problem-solving with unmatched expertise in mar
 
 Your task is to analyze this text and construct a response in JSON format. 
 The response should be a array of objects.
-Each object is representing influence on the EURUSD market and have to have following fields:
+Each object is representing influence on the USD price on EURUSD market and have to have following fields:
 
 type: 0 (negative impact) or 1 (positive impact)
 impactPrc: an integer from 0 to 100 representing the percentage fluctuation of the asset's value.
