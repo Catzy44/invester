@@ -33,21 +33,38 @@ public class MarketEventService extends GenericServiceImpl<MarketEvent, Long>{
 	@Autowired LMStudioService serviceLM;
 	
 	private static final Logger logger = LoggerFactory.getLogger(MarketEventService.class);
-	private static final int RETRIES = 3;
+	private static final int AI_PROCESSING_RETRIES = 3;
 	
-	@Scheduled(fixedRate = 1, initialDelay = 0, timeUnit = TimeUnit.MINUTES)
+	@Scheduled(fixedRate = 1, initialDelay = 1, timeUnit = TimeUnit.MINUTES)
 	public void findAndProcessArticle() {
-		List<Article> unprocessed = repoArticles.findByEventsIsEmptyAndContentIsNotNullOrderByTimestamp();
+		List<Article> unprocessed = repoArticles.findByEventsIsEmptyAndContentIsNotNullOrderByTimestampDesc();
 		
-		for(Article a : unprocessed) {
-			processArticle(a);
+		for(int i = 0; i < unprocessed.size(); i++) {
+			logger.info("Left to process: "+(unprocessed.size()-i));
+			Article articleToProcess = unprocessed.get(i);
+			processArticleTimed(articleToProcess);
+		}
+	}
+	
+	long tBooted = System.currentTimeMillis();
+	long tSpentOnProcessing = 0;
+	public void processArticleTimed(Article a) {
+		long tStarted = System.currentTimeMillis();
+		processArticle(a);
+		long tPassed = System.currentTimeMillis()-tStarted;
+		tSpentOnProcessing += tPassed;
+		
+		{
+			long tPassedFromBoot = System.currentTimeMillis()-tBooted;
+			double prcTimeInProcessing = (double)tSpentOnProcessing/(double)tPassedFromBoot*100.0;
+			logger.info("Time spent on processing: "+prcTimeInProcessing+"%");
 		}
 	}
 	
 	public void processArticle(Article a) {
 		logger.info("AI processing ID:" + a.getId() + ", title:"+a.getTitle());
 
-		for (int i = 0; i < RETRIES; i++) {
+		for (int i = 0; i < AI_PROCESSING_RETRIES; i++) {
 			try {
 				AIResponse mes = askChatbot(a.getContent(),a.getTimestamp());
 				
@@ -96,14 +113,14 @@ You are an AI expert in business problem-solving with unmatched expertise in mar
 
 Your task is to analyze this text and construct a response in JSON format. 
 The response should be a array of objects.
-Each object is representing influence on the USD price on EURUSD market and have to have following fields:
+Each object is representing influence on EURUSD CFD market (we are investing on the EUR side) and have to have following fields:
 
 type: 0 (negative impact) or 1 (positive impact)
 impactPrc: an integer from 0 to 100 representing the percentage fluctuation of the asset's value.
 impactChance integer from 0 to 100 representing the chance this fluctuation will occur.
 startTimestamp: A SQL TIMESTAMP representing the start of the influence in the format yyyy-MM-dd'T'HH:mm:ss.SSS±hh:mm. Specify the use of UTC offset instead of time zone abbreviations If the time zone is unknown, use Z to indicate UTC.
 endTimestamp: A SQL TIMESTAMP representing the end of the influence, formatted similarly.
-scream: a short expressive phrase (max 32 characters) in POLISH capturing a spontaneous reaction or mood.
+scream: a short expressive phrase (max 32 characters) in POLISH capturing a reason for this influence in a fun tone!.
 
 Object can be both positive and negative. The generated objects will be further processed for charting purposes.
 Object keys cannot be null.

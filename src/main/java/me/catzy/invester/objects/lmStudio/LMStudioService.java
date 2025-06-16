@@ -34,7 +34,7 @@ public class LMStudioService {
 		if(LMStudioWaked) {
 			return;
 		}
-		logger.info("starting LSM...");
+		logger.info("starting LMS...");
 		Process p = new ProcessBuilder("lms","server","start").start();
 		Utils.dumpUntilExahausted(p.getInputStream());
 		Utils.dumpUntilExahausted(p.getErrorStream());
@@ -56,7 +56,7 @@ public class LMStudioService {
 		p.waitFor();
 		Thread.sleep(1000);
 		
-		logger.info("LSM up and running!");
+		logger.info("LMS up and running!");
 		
 		LMStudioWaked = true;
 		

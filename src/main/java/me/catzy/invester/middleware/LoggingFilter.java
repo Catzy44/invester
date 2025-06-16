@@ -1,4 +1,4 @@
-package me.catzy.invester;
+package me.catzy.invester.middleware;
 
 import java.io.IOException;
 
@@ -12,14 +12,17 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
-import me.catzy.invester.objects.marketEvent.MarketEventService;
 
 @Component
 public class LoggingFilter implements Filter {
-	private static final Logger logger = LoggerFactory.getLogger(MarketEventService.class);
+	private static final Logger logger = LoggerFactory.getLogger(LoggingFilter.class);
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
     	HttpServletRequest req = (HttpServletRequest) request;
+    	if(req.getMethod().equals("OPTIONS")) {
+    		chain.doFilter(request, response);
+    		return;
+    	}
     	logger.info(req.getRemoteAddr() + " => " + req.getMethod() + " " + req.getRequestURI());
         chain.doFilter(request, response);
     }

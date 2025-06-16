@@ -12,9 +12,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class WebSecurity {
 
-    private final PrzemoFilter filter;
+    private final SecurityFilter filter;
 
-    public WebSecurity(PrzemoFilter filter) {
+    public WebSecurity(SecurityFilter filter) {
         this.filter = filter;
     }
 
@@ -27,15 +27,8 @@ public class WebSecurity {
                 // pre-flight CORS
                 .requestMatchers(HttpMethod.OPTIONS).permitAll()
 
-                // API security
-                .requestMatchers("/security/handshake").authenticated()
+                // generowanie sesji
                 .requestMatchers("/security/**").permitAll()
-
-                // formularze i SMS-y – otwarte
-                .requestMatchers("/formularze/active").permitAll()
-                .requestMatchers("/formularze/p_**").permitAll()
-                .requestMatchers("/formularze/*/p_**").permitAll()
-                .requestMatchers("/sms/p_**").permitAll()
 
                 // wszystko inne wymaga auth
                 .anyRequest().authenticated()

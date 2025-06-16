@@ -72,6 +72,10 @@ tasks.named('test') {
 
 processResources.duplicatesStrategy='include'
 
+tasks.withType(JavaCompile) {
+    options.compilerArgs += ['-parameters']
+}
+
 if (project.hasProperty('rebelAgent')) {
     bootRun.jvmArgs += rebelAgent
 }
